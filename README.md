@@ -77,7 +77,7 @@ npm.cmd run check
 powershell -ExecutionPolicy Bypass -File .\scripts\install-autostart.ps1
 ```
 
-这个脚本会在 Windows“任务计划程序库”中创建或更新名为 `FmU8SmsBridge` 的任务。任务使用当前 Windows 用户、有限权限，在该用户登录后启动本地网页服务；进程意外退出时每分钟重试。它不会在登录前运行，也不会把网页暴露给局域网。
+这个脚本会在 Windows“任务计划程序库”中创建或更新名为 `FmU8SmsBridge` 的任务。任务使用当前 Windows 用户、有限权限，在该用户登录后通过隐藏的 PowerShell 包装器启动本地网页服务；进程意外退出时每分钟重试。它不会显示持续驻留的 CMD 窗口，不会在登录前运行，也不会把网页暴露给局域网。
 
 不需要再手工创建任务。安装后可以打开“任务计划程序”查看，也可以用以下命令验收：
 
@@ -87,6 +87,8 @@ Start-ScheduledTask -TaskName FmU8SmsBridge
 Get-ScheduledTaskInfo -TaskName FmU8SmsBridge
 ```
 
+启动任务后直接访问 <http://127.0.0.1:8788>，无需保留终端窗口。任务自身保持 `Running` 状态属于正常现象；如果以前安装的版本会显示 CMD 窗口，请重新运行安装脚本以更新任务动作。
+
 卸载任务（不会删除项目、配置或短信历史）：
 
 ```powershell
@@ -94,6 +96,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\uninstall-autostart.ps1
 ```
 
 如果移动了项目目录或 Node.js 安装位置，请重新运行安装脚本，使任务记录新的路径。
+
+如果更新旧任务时出现 `Access is denied`，说明该任务最初由管理员会话创建。请右键以管理员身份打开 PowerShell，进入项目目录后重新执行安装命令；后续启动和查看任务不需要保持管理员窗口。
 
 ## 配置
 
