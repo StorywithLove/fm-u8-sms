@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#1769e0" />
+    <title>FM U8 短信</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">U8</div>
+          <div>
+            <h1>短信收件箱</h1>
+            <p>FM U8 · 仅保存在此电脑</p>
+          </div>
+        </div>
+        <div id="connection-pill" class="status-pill status-loading">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="connection-label">正在连接</span>
+        </div>
+      </header>
+
+      <div id="error-banner" class="error-banner" role="status" hidden></div>
+
+      <main class="workspace">
+        <aside class="sidebar" aria-label="短信概览">
+          <section class="summary-card">
+            <span class="eyebrow">本地收件箱</span>
+            <strong id="unread-count" class="summary-number">—</strong>
+            <span class="summary-label">条未读短信</span>
+            <div class="summary-meta">
+              <span>历史 <strong id="total-count">—</strong></span>
+              <span>设备未读 <strong id="device-unread-count">—</strong></span>
+            </div>
+          </section>
+
+          <section class="device-card">
+            <div class="device-row">
+              <span>网络</span>
+              <strong id="network-name">—</strong>
+            </div>
+            <div class="device-row">
+              <span>设备</span>
+              <strong id="device-name">FM U8</strong>
+            </div>
+            <div class="device-row">
+              <span>芯片</span>
+              <strong id="chip-name">—</strong>
+            </div>
+            <div class="device-row">
+              <span>上次同步</span>
+              <strong id="last-sync">—</strong>
+            </div>
+          </section>
+
+          <button id="sync-button" class="primary-button" type="button">
+            立即同步
+          </button>
+        </aside>
+
+        <section class="inbox-panel" aria-labelledby="inbox-title">
+          <div class="inbox-heading">
+            <div>
+              <span class="eyebrow">MESSAGES</span>
+              <h2 id="inbox-title">所有短信</h2>
+            </div>
+            <button id="read-all-button" class="text-button" type="button">
+              全部标为已读
+            </button>
+          </div>
+
+          <div class="inbox-tools">
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <span class="sr-only">搜索短信</span>
+              <input id="search-input" type="search" placeholder="搜索号码或短信内容" />
+            </label>
+            <div class="filter-tabs" aria-label="筛选短信">
+              <button class="filter-tab active" data-filter="all" type="button">全部</button>
+              <button class="filter-tab" data-filter="unread" type="button">未读</button>
+            </div>
+          </div>
+
+          <div id="message-list" class="message-list" aria-live="polite"></div>
+
+          <div id="empty-state" class="empty-state" hidden>
+            <div class="empty-icon" aria-hidden="true">✉</div>
+            <h3>这里还没有短信</h3>
+            <p>连接 U8 后点击“立即同步”，收到的新短信会自动出现在这里。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="message-template">
+      <button class="message-item" type="button">
+        <span class="sender-avatar" aria-hidden="true"></span>
+        <span class="message-copy">
+          <span class="message-topline">
+            <strong class="message-sender"></strong>
+            <time class="message-time"></time>
+          </span>
+          <span class="message-preview"></span>
+        </span>
+        <span class="unread-dot" aria-label="未读"></span>
+      </button>
+    </template>
+
+    <dialog id="message-dialog" class="message-dialog">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">短信详情</span>
+          <h2 id="dialog-sender"></h2>
+        </div>
+        <button id="dialog-close" class="close-button" type="button" aria-label="关闭">×</button>
+      </div>
+      <time id="dialog-time" class="dialog-time"></time>
+      <p id="dialog-content" class="dialog-content"></p>
+    </dialog>
+  </body>
+</html>

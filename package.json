@@ -1,0 +1,26 @@
+{
+  "name": "fm-u8-sms",
+  "version": "0.1.0",
+  "description": "A private local web inbox for SMS messages received by a Flymodem FM U8.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "watch": "node --env-file-if-exists=.env src/cli.js watch",
+    "status": "node --env-file-if-exists=.env src/cli.js status",
+    "list": "node --env-file-if-exists=.env src/cli.js list",
+    "test": "node --test",
+    "check": "node --check src/cli.js && node --check src/server.js && node --check web/app.js && node --test"
+  },
+  "keywords": [
+    "flymodem",
+    "fm-u8",
+    "sms",
+    "pxa1802",
+    "modem"
+  ]
+}
