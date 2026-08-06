@@ -26,7 +26,10 @@ export class FmU8Client {
     );
 
     this.session = challenge;
-    this.nonceCount = 1;
+    // The login digest itself uses nc=1, but the U8 web UI starts API request
+    // counting from 1 again. A freshly booted device rejects an API request
+    // whose first Authorization header starts at nc=2.
+    this.nonceCount = 0;
     const clientNonce = createClientNonce();
     const response = buildDigestResponse({
       method: 'GET',

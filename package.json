@@ -1,6 +1,6 @@
 {
   "name": "fm-u8-sms",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A private local web inbox for SMS messages received by a Flymodem FM U8.",
   "type": "module",
   "private": false,
